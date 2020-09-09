@@ -4,10 +4,16 @@ module.exports = (pathPattern, pathPatternConfig, originId) => {
   const {
     allowedHttpMethods = ["GET", "HEAD"],
     ttl,
+    minTtl,
+    maxTtl,
     compress = true,
     smoothStreaming = false,
     viewerProtocolPolicy = "https-only",
-    fieldLevelEncryptionId = ""
+    fieldLevelEncryptionId = "",
+    trustedSigners = {
+      Enabled: false,
+      Quantity: 0
+    }
   } = pathPatternConfig;
 
   return {
@@ -15,13 +21,10 @@ module.exports = (pathPattern, pathPatternConfig, originId) => {
       cookies: "all",
       queryString: true
     }),
-    MinTTL: ttl,
+    MinTTL: minTtl || ttl,
     PathPattern: pathPattern,
     TargetOriginId: originId,
-    TrustedSigners: {
-      Enabled: false,
-      Quantity: 0
-    },
+    TrustedSigners: trustedSigners,
     ViewerProtocolPolicy: viewerProtocolPolicy,
     AllowedMethods: {
       Quantity: allowedHttpMethods.length,
@@ -34,7 +37,7 @@ module.exports = (pathPattern, pathPatternConfig, originId) => {
     Compress: compress,
     SmoothStreaming: smoothStreaming,
     DefaultTTL: ttl,
-    MaxTTL: ttl,
+    MaxTTL: maxTtl || ttl,
     FieldLevelEncryptionId: fieldLevelEncryptionId,
     LambdaFunctionAssociations: {
       Quantity: 0,
