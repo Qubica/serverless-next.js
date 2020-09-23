@@ -211,6 +211,7 @@ class NextjsComponent extends Component {
       priceClass: cloudFrontPriceClassInputs,
       errorPages: cloudFrontErrorPagesInputs,
       distributionId: cloudFrontDistributionId = null,
+      "_next/data/*": cloudFrontNextDataInputs,
       ...cloudFrontOtherInputs
     } = inputs.cloudfront || {};
 
@@ -495,7 +496,8 @@ class NextjsComponent extends Component {
       "lambda@edge": {
         "origin-response": `${defaultEdgeLambdaOutputs.arn}:${defaultEdgeLambdaPublishOutputs.version}`,
         "origin-request": `${defaultEdgeLambdaOutputs.arn}:${defaultEdgeLambdaPublishOutputs.version}`
-      }
+      },
+      ...cloudFrontNextDataInputs
     };
 
     // make sure that origin-response is not set.

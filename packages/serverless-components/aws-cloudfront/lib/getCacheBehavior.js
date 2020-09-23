@@ -9,7 +9,11 @@ module.exports = (pathPattern, pathPatternConfig, originId) => {
     compress = true,
     smoothStreaming = false,
     viewerProtocolPolicy = "https-only",
-    fieldLevelEncryptionId = ""
+    fieldLevelEncryptionId = "",
+    trustedSigners = {
+      Enabled: false,
+      Quantity: 0
+    }
   } = pathPatternConfig;
 
   return {
@@ -20,10 +24,7 @@ module.exports = (pathPattern, pathPatternConfig, originId) => {
     MinTTL: minTTL,
     PathPattern: pathPattern,
     TargetOriginId: originId,
-    TrustedSigners: {
-      Enabled: false,
-      Quantity: 0
-    },
+    TrustedSigners: trustedSigners,
     ViewerProtocolPolicy: viewerProtocolPolicy,
     AllowedMethods: {
       Quantity: allowedHttpMethods.length,
